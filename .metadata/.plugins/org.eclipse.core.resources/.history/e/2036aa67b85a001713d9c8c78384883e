@@ -1,0 +1,46 @@
+package konferencja;
+
+import org.testng.AssertJUnit;
+
+import org.testng.annotations.AfterClass;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest
+{
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     */
+    public AppTest( String testName )
+    {
+    }
+
+    /**
+     * Rigourous Test :-)
+     */
+    @Test
+	public void testApp()
+    {
+    	WebDriver driver = new ChromeDriver();
+    	driver.get("localhost/konferencja");
+    	Assert(driver.getTitle(), containsString("Konferencja"));
+    	
+    	
+    	
+        AssertJUnit.assertTrue( true );
+    }
+}

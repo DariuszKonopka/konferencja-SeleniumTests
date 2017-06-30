@@ -1,0 +1,57 @@
+package konferencja;
+
+import org.testng.AssertJUnit;
+
+import org.testng.annotations.AfterClass;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.startsWith;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest
+{
+	SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
+	String date = format1.format(new Date()); 
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     */
+    public AppTest( String testName )
+    {
+    }
+
+    /**
+     * Rigourous Test :-)
+     */
+    @Test
+	public void testApp()
+    {
+    	WebDriver driver = new ChromeDriver();
+    	driver.get("localhost/konferencja");
+    	assertThat(driver.getTitle(), startsWith("Konferencja"));
+    	
+    	
+    	WebElement loginField = driver.findElement(By.cssSelector("a:contains('Rejestracja - załóż konto!')"));
+    	loginField.click();
+    	loginField.clear();
+    	loginField.sendKeys("u"+ );
+    	
+        AssertJUnit.assertTrue( true );
+    }
+}

@@ -1,0 +1,88 @@
+package konferencja;
+
+import org.testng.AssertJUnit;
+
+import org.testng.annotations.AfterClass;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.startsWith;
+
+
+public class AppTest
+{
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmss");
+	private static final String DATE = DATE_FORMAT.format(new Date());
+	private static final String LOGIN_USER = "uL" + DATE;
+	private static final String PASS_USER = "uP" + DATE;
+	private static final String NAME_USER = "uN" + DATE;
+	private static final String DEGREE_USER = "uD" + DATE;
+	private static final String MAIL_USER = "uM" + DATE;
+	/*FluentWait fluentWait = new FluentWait<>(webDriver) {
+	    .withTimeout(30, TimeUnit.SECONDS)
+	    .pollingEvery(200, TimeUnit.MILLISECONDS);
+	}*/
+	WebDriver driver;
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     */
+    public AppTest( String testName )
+    {
+    	System.setProperty("webdriver.chrome.driver", "C:\\_Selenium\\_ChromeDriver\\chromedriver.exe"); // /path/to/chromedriver
+    	driver = new ChromeDriver();
+    }
+
+    @Test(description = "Creation of user", priority = 1)
+	public void testApp()
+    {
+    	WebElement submitInput;
+    	driver.get("http://127.0.0.1/konferencja");
+    	assertThat(driver.getTitle(), startsWith("Konferencja"));
+    	
+    	WebElement registrationLink = driver.findElement(By.cssSelector("a[href='registration.php']"));
+    	registrationLink.click();
+    	
+    	setInput("LOGIN", LOGIN_USER);
+    	setInput("PASSWORD", PASS_USER);
+    	setInput("NAME", NAME_USER);
+    	setInput("DEGREE", DEGREE_USER);
+    	setInput("E_MAIL", MAIL_USER);
+    	submitInput = driver.findElement(By.cssSelector("input[type='submit']"));
+    	submitInput.submit();
+    	
+    	WebDriverWait wait = new WebDriverWait(driver, 10);
+    	wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[name='login']")));
+    	setInput("login", LOGIN_USER);
+    	setInput("pass", PASS_USER);
+    	submitInput = driver.findElement(By.cssSelector("input[type='submit']"));
+    	submitInput.submit();
+    	
+        //AssertJUnit.assertTrue( true );	
+    }
+    
+    private void setInput(String inputName, String content){
+    	By by = By.cssSelector("input[name='" + inputName + "']");
+    	//By by = By.xpath("//input[@name='" + inputName + "']");
+    	WebElement inputField = driver.findElement(by);
+    	inputField.click();
+    	inputField.clear();
+    	inputField.sendKeys(content);
+    }
+    
+}
